@@ -1,107 +1,111 @@
-# Python-Challenge
+# Python API Homework - What's the Weather Like?
 
-Py Me Up, Charlie
+## Background
 
-Background
-Well... you've made it!
-It's time to put away the Excel sheet and join the big leagues. Welcome to the world of programming with Python. In this homework assignment, you'll be using the concepts you've learned to complete the two Python Challenges, PyBank and PyPoll.
-Both of these challenges encompass a real-world situation where your newfound Python scripting skills can come in handy. These challenges are far from easy so expect some hard work ahead!
+Whether financial, political, or social -- data's true power lies in its ability to answer questions definitively. So let's take what you've learned about Python requests, APIs, and JSON traversals to answer a fundamental question: "What's the weather like as we approach the equator?"
 
-Before You Begin
+Now, we know what you may be thinking: _"Duh. It gets hotter..."_
 
+But, if pressed, how would you **prove** it?
 
-Create a new repository for this project called python-challenge. Do not add this homework to an existing repository.
+![Equator](Images/equatorsign.png)
 
 
-Clone the new repository to your computer.
+## Part I - WeatherPy
 
+In this example, you'll be creating a Python script to visualize the weather of 500+ cities across the world of varying distance from the equator. To accomplish this, you'll be utilizing a [simple Python library](https://pypi.python.org/pypi/citipy), the [OpenWeatherMap API](https://openweathermap.org/api), and a little common sense to create a representative model of weather across world cities.
 
-Inside your local git repository, create a directory for each Python Challenge. Use folder names corresponding to the challenges: PyBank and  PyPoll.
+The first requirement is to create a series of scatter plots to showcase the following relationships:
 
+* Temperature (F) vs. Latitude
+* Humidity (%) vs. Latitude
+* Cloudiness (%) vs. Latitude
+* Wind Speed (mph) vs. Latitude
 
-Inside of each folder that you just created, add the following:
+After each plot, add a sentence or two explaining what the code is analyzing.
 
-A new file called main.py. This will be the main script to run for each analysis.
-A "Resources" folder that contains the CSV files you used. Make sure your script has the correct path to the CSV file.
-An "analysis" folder that contains your text file that has the results from your analysis.
+The second requirement is to run linear regression on each relationship. This time, separate the plots into Northern Hemisphere (greater than or equal to 0 degrees latitude) and Southern Hemisphere (less than 0 degrees latitude):
 
-Push the above changes to GitHub or GitLab.
+* Northern Hemisphere - Temperature (F) vs. Latitude
+* Southern Hemisphere - Temperature (F) vs. Latitude
+* Northern Hemisphere - Humidity (%) vs. Latitude
+* Southern Hemisphere - Humidity (%) vs. Latitude
+* Northern Hemisphere - Cloudiness (%) vs. Latitude
+* Southern Hemisphere - Cloudiness (%) vs. Latitude
+* Northern Hemisphere - Wind Speed (mph) vs. Latitude
+* Southern Hemisphere - Wind Speed (mph) vs. Latitude
 
+After each pair of plots, take the time to explain what the linear regression is modeling. For example, describe any relationships you notice and any other analysis you may have.
 
-PyBank
+Your final notebook must:
 
-In this challenge, you are tasked with creating a Python script for analyzing the financial records of your company. You will give a set of financial data called budget_data.csv. The dataset is composed of two columns: Date and Profit/Losses. (Thankfully, your company has rather lax standards for accounting so the records are simple.)
+* Randomly select **at least** 500 unique (non-repeat) cities based on latitude and longitude.
+* Perform a weather check on each of the cities using a series of successive API calls.
+* Include a print log of each city as it's being processed with the city number and city name.
+* Save a CSV of all retrieved data and a PNG image for each scatter plot.
 
+### Part II - VacationPy
 
-Your task is to create a Python script that analyzes the records to calculate each of the following:
+Now let's use your skills in working with weather data to plan future vacations. Use jupyter-gmaps and the Google Places API for this part of the assignment.
 
+* **Note:** Remember that any API usage beyond the $200 credit will be charged to your personal account. You can set quotas and limits to your daily requests to be sure you can't be charged. Check out [Google Maps Platform Billing](https://developers.google.com/maps/billing/gmp-billing#monitor-and-restrict-consumption) and [Manage your cost of use](https://developers.google.com/maps/documentation/javascript/usage-and-billing#set-caps) for more information.
 
-The total number of months included in the dataset
+* **Note:** if you having trouble displaying the maps, try running `jupyter nbextension enable --py gmaps` in your environment and retry.
 
+To complete this part of the assignment,you will need to do the following:
 
-The net total amount of "Profit/Losses" over the entire period
+* Create a heat map that displays the humidity for every city from Part I.
 
+  ![heatmap](Images/heatmap.png)
 
-Calculate the changes in "Profit/Losses" over the entire period, then find the average of those changes
+* Narrow down the DataFrame to find your ideal weather condition. For example:
 
+  * A max temperature lower than 80 degrees but higher than 70.
 
-The greatest increase in profits (date and amount) over the entire period
+  * Wind speed less than 10 mph.
 
+  * Zero cloudiness.
 
-The greatest decrease in losses (date and amount) over the entire period
+  * Drop any rows that don't contain all three conditions. You want to be sure the weather is ideal.
 
+  * **Note:** Feel free to adjust to your specifications but be sure to limit the number of rows returned by your API requests to a reasonable number.
 
+* Using Google Places API to find the first hotel for each city located within 5000 meters of your coordinates.
 
+* Plot the hotels on top of the humidity heatmap with each pin containing the **Hotel Name**, **City**, and **Country**.
 
-As an example, your analysis should look similar to the one below:
-Financial Analysis
-----------------------------
-Total Months: 86
-Total: $38382578
-Average  Change: $-2315.12
-Greatest Increase in Profits: Feb-2012 ($1926159)
-Greatest Decrease in Profits: Sep-2013 ($-2196167)
+  ![hotel map](Images/hotel_map.png)
 
+As final considerations:
 
-In addition, your final script should both print the analysis to the terminal and export a text file with the results.
+* You must complete your analysis using a Jupyter notebook.
+* You must use the Matplotlib or Pandas plotting libraries.
+* For Part I, you must include a written description of three observable trends based on the data.
+* For Part II, you must include a screenshot of the heatmap you create and include it in your submission.
+* You must use proper labeling of your plots, including aspects like: Plot Titles (with date of analysis) and Axes Labels.
+* For max intensity in the heat map, try setting it to the highest humidity found in the data set.
 
+## Hints and Considerations
 
+* The city data you generate is based on random coordinates as well as different query times. As such, your outputs will not be an exact match to the provided starter notebook.
 
-PyPoll
+* If you'd like a refresher on the geographic coordinate system, [this site](http://desktop.arcgis.com/en/arcmap/10.3/guide-books/map-projections/about-geographic-coordinate-systems.htm) has great information.
 
-In this challenge, you are tasked with helping a small, rural town modernize its vote counting process.
+* Next, spend the requisite time necessary to study the OpenWeatherMap API. Based on your initial study, you should be able to answer basic questions about the API: Where do you request the API key? Which Weather API in particular will you need? What URL endpoints does it expect? What JSON structure does it respond with? Before you write a line of code, you should be aiming to have a crystal clear understanding of your intended outcome.
 
+* A starter code for Citipy has been provided. However, if you're craving an extra challenge, push yourself to learn how it works: [citipy Python library](https://pypi.python.org/pypi/citipy). Before you try to incorporate the library into your analysis, start by creating simple test cases outside your main script to confirm that you are using it correctly. Too often, when introduced to a new library, students get bogged down by the most minor of errors -- spending hours investigating their entire code -- when, in fact, a simple and focused test would have shown their basic utilization of the library was wrong from the start. Don't let this be you!
 
-You will be give a set of poll data called election_data.csv. The dataset is composed of three columns: Voter ID, County, and Candidate. Your task is to create a Python script that analyzes the votes and calculates each of the following:
+* Part of our expectation in this challenge is that you will use critical thinking skills to understand how and why we're recommending the tools we are. What is Citipy for? Why would you use it in conjunction with the OpenWeatherMap API? How would you do so?
 
+* In building your script, pay attention to the cities you are using in your query pool. Are you getting coverage of the full gamut of latitudes and longitudes? Or are you simply choosing 500 cities concentrated in one region of the world? Even if you were a geographic genius, simply rattling 500 cities based on your human selection would create a biased dataset. Be thinking of how you should counter this. (Hint: Consider the full range of latitudes).
 
-The total number of votes cast
+* Once you have computed the linear regression for one chart, the process will be similar for all others. As a bonus, try to create a function that will create these charts based on different parameters.
 
+* Remember that each coordinate will trigger a separate call to the Google API. If you're creating your own criteria to plan your vacation, try to reduce the results in your DataFrame to 10 or fewer cities.
 
-A complete list of candidates who received votes
+* Lastly, remember -- this is a challenging activity. Push yourself! If you complete this task, then you can safely say that you've gained a strong mastery of the core foundations of data analytics and it will only go better from here. Good luck!
 
+### Copyright
 
-The percentage of votes each candidate won
+Trilogy Education Services © 2020. All Rights Reserved.
 
-
-The total number of votes each candidate won
-
-
-The winner of the election based on popular vote.
-
-
-As an example, your analysis should look similar to the one below:
-Election Results
--------------------------
-Total Votes: 3521001
--------------------------
-Khan: 63.000% (2218231)
-Correy: 20.000% (704200)
-Li: 14.000% (492940)
-O'Tooley: 3.000% (105630)
--------------------------
-Winner: Khan
--------------------------
-
-
-In addition, your final script should both print the analysis to the terminal and export a text file with the results.
